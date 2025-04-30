@@ -3,10 +3,13 @@ import { Container } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { DataTableCard2, DateTime, DataTableFilter2 } from 'asab_webui_components';
+import { useNavigate } from 'react-router-dom';
+
 
 export function TableScreen(props) {
 	const { t } = useTranslation();
 	const [ isHoverId, setHoverId ] = useState(null);
+	const navigate = useNavigate();
 
 	const columns = [
 		{
@@ -42,9 +45,8 @@ export function TableScreen(props) {
 		{
 			thStyle: {width: "0px"},
 			tdStyle: {padding: "0px", whiteSpace: "nowrap"},
-			render: ({ row, column }) => (<>
-				{/* TODO, redirect to the detailed page */}
-				<button className="btn btn-primary me-1" onClick={() => onYClick(row)}><i className="bi bi-info-lg"></i></button>
+			render: ({ row }) => (<>
+				<button className="btn btn-primary me-1" onClick={() => navigate(`/users/${row.id}`)}><i className="bi bi-info-lg"></i></button>
 			</>)
 		}
 	];
