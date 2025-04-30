@@ -1,42 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
+import { DataTableCard2, DateTime, DataTableFilter2 } from 'asab_webui_components';
 
 export function TableScreen(props) {
 	const { t } = useTranslation();
+	const [ isHoverId, setHoverId ] = useState(null);
 
 	const columns = [
 		{
 			title: "Username",
 			thStyle: {minWidth: "2rem"},
-			render: ({ row }) =>
-				<Link to={`/auth/session/${row._id}`}>
-					{row._id}
-				</Link>
+			render: ({ row }) => 
+			<span 
+			onMouseEnter={() => setHoverId(row.id)}
+			onMouseLeave={() => setHoverId(null)}>
+				{isHoverId === row.id ? row.id : row.username}
+			</span>
 		},
 		{
 			title: "Email",
 			thStyle: {minWidth: "2rem"},
-			render: ({ row }) =>
-				<Link to={`/auth/credentials/${row.credentials_id}`}>
-					{row.credentials_id}
-				</Link>
+			render: ({ row }) => row.email
 		},
 		{
 			title: "Created at",
 			thStyle: {minWidth: "4rem"},
-			render: ({ row }) => <DateTime value={row._c}/>
+			render: ({ row }) => <DateTime value={row.created * 1000}/> // turn into miliseconds
 		},
 		{
 			title: "Last signed in",
 			thStyle: {minWidth: "4rem"},
-			render: ({ row }) => <DateTime value={row.expiration}/>
+			render: ({ row }) => <DateTime value={row.last_sign_in * 1000}/>
 		},
 		{
 			title: "Address",
 			thStyle: {minWidth: "6rem"},
-			render: ({ row }) => <DateTime value={row.expiration}/>
+			render: ({ row }) => row.address
 		},
 		{
 			thStyle: {width: "0px"},
@@ -49,15 +50,39 @@ export function TableScreen(props) {
 	];
 
 	const loader = async ({params}) => {
-		let response = await axios.get("https://devtest.teskalabs.com/data", {params: params});
-		const rows = response.data.data;
-		const count = response.data.count;
-		return { count, rows } ;
+		try {
+			let response = await axios.get("https://devtest.teskalabs.com/data", {params: params});
+			const rows = response.data.data;
+			const count = response.data.count;
+			return { count, rows };
+		}
+		catch (e) {
+			console.error("Error during loading:", e);
+			throw e
+		}
+	}
+
+	const Header = () => {
+		return	(<>
+			<div className="flex-fill">
+				<h3>
+					<i className="bi bi-stopwatch pe-2"></i>
+					{t("SessionListContainer|Sessions")}
+				</h3>
+			</div>
+			<DataTableFilter2 />
+			<button type="button" className="btn btn-danger">Terminate all</button>
+		</>);
 	}
 
 	return (
 		<Container className='h-100'>
-			{t('Training|Hello, there is nothing here yet!')}
+			<DataTableCard2 
+			columns={columns}
+			loader={loader}
+			header={<Header/>}
+			initialLimit={10}
+			/>
 		</Container>
 	);
 }

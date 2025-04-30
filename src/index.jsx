@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { HashRouter } from 'react-router-dom';
-import { Application, I18nModule, AboutModule } from 'asab_webui_shell';
+import { Application, I18nModule, AboutModule, TenantModule } from 'asab_webui_shell';
 
 (async function init() {
 	// Dynamically import your module(s)
@@ -36,14 +36,18 @@ import { Application, I18nModule, AboutModule } from 'asab_webui_shell';
 			supportedLngs: ['en', 'cs'],
 			debug: false,
 			nsSeparator: false
-		}
+		},
+		tenants: [
+			'teskaLabs'
+		],
+		defaultTenant: 'teskaLabs'
 	};
 
 	ReactDOM.render((
 		<HashRouter>
 			<Application
 				configdefaults={config}
-				modules={[I18nModule, AboutModule, TableApplicationModule]}
+				modules={[TenantModule, I18nModule, AboutModule, TableApplicationModule]}
 			/>
 		</HashRouter>
 	), document.getElementById('app'));
