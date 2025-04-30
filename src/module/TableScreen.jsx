@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 export function TableScreen(props) {
 	const { t } = useTranslation();
@@ -46,6 +47,13 @@ export function TableScreen(props) {
 			</>)
 		}
 	];
+
+	const loader = async ({params}) => {
+		let response = await axios.get("https://devtest.teskalabs.com/data", {params: params});
+		const rows = response.data.data;
+		const count = response.data.count;
+		return { count, rows } ;
+	}
 
 	return (
 		<Container className='h-100'>
