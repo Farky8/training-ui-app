@@ -13,7 +13,7 @@ export function TableScreen(props) {
 
 	const columns = [
 		{
-			title: "Username",
+			title: t("General|Username"),
 			thStyle: {minWidth: "2rem"},
 			render: ({ row }) => 
 			<span 
@@ -23,22 +23,22 @@ export function TableScreen(props) {
 			</span>
 		},
 		{
-			title: "Email",
+			title: t("Genera|Email"),
 			thStyle: {minWidth: "2rem"},
 			render: ({ row }) => row.email
 		},
 		{
-			title: "Created at",
+			title: t("General|Created at"),
 			thStyle: {minWidth: "4rem"},
 			render: ({ row }) => <DateTime value={row.created * 1000}/> // turn into miliseconds
 		},
 		{
-			title: "Last signed in",
+			title: t("General|Last signed in"),
 			thStyle: {minWidth: "4rem"},
 			render: ({ row }) => <DateTime value={row.last_sign_in * 1000}/>
 		},
 		{
-			title: "Address",
+			title: t("General|Address"),
 			thStyle: {minWidth: "6rem"},
 			render: ({ row }) => row.address
 		},
@@ -59,7 +59,6 @@ export function TableScreen(props) {
 			return { count, rows };
 		}
 		catch (e) {
-			console.error("Error during loading:", e);
 			throw e
 		}
 	}
@@ -73,7 +72,7 @@ export function TableScreen(props) {
 				</h3>
 			</div>
 			<DataTableFilter2 />
-			<button type="button" className="btn btn-danger">Terminate all</button>
+			<button type="button" className="btn btn-danger">{t("General|Terminate all")}</button>
 		</>);
 	}
 
