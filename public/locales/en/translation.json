@@ -91,7 +91,8 @@
 		"Phone" : "Phone",
 		"IP address": "IP address",
 		"MAC address": "MAC address",
-		"Reset filters": "Reset filters"
+		"Reset filters": "Reset filters",
+		"Users": "Users"
 	},
 
 	"Training": {

@@ -94,8 +94,8 @@ export function TableScreen(props) {
 		return	(<>
 			<div className="flex-fill">
 				<h3>
-					<i className="bi bi-stopwatch pe-2"></i>
-					{t("SessionListContainer|Sessions")}
+					<i className="bi bi-people-fill pe-2"></i>
+					{t("General|Users")}
 				</h3>
 			</div>
 			<button onClick={clearAllFilters} type="button" className="btn btn-danger">{t("General|Reset filters")}</button>
