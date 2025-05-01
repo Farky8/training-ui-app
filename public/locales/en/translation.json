@@ -90,7 +90,8 @@
 		"Failed to load user": "Failed to load user",
 		"Phone" : "Phone",
 		"IP address": "IP address",
-		"MAC address": "MAC address"
+		"MAC address": "MAC address",
+		"Reset filters": "Reset filters"
 	},
 
 	"Training": {

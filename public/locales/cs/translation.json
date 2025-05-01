@@ -90,7 +90,8 @@
 		"Failed to load user": "Nepodařilo se načíst uživatele",
 		"Phone": "Telefon",
 		"IP address": "IP adresa",
-		"MAC address": "MAC adresa"
+		"MAC address": "MAC adresa",
+		"Reset filters": "Resetovat filtry"
 	},
 
 	"Training": {

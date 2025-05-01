@@ -3,13 +3,14 @@ import { Container } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { DataTableCard2, DateTime, DataTableFilter2, DataTableSort2 } from 'asab_webui_components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 
 export function TableScreen(props) {
 	const { t } = useTranslation();
 	const [ isHoverId, setHoverId ] = useState(null);
 	const navigate = useNavigate();
+	const [searchParams, setSearchParams] = useSearchParams();
 
 	const columns = [
 		{
@@ -81,6 +82,14 @@ export function TableScreen(props) {
 		}
 	}
 
+	const clearAllFilters = () => {
+	  const limit = searchParams.get('i') || '10';
+	  const newParams = new URLSearchParams();
+	  newParams.set('p', '1');
+	  newParams.set('i', limit);
+	  setSearchParams(newParams, { replace: true });
+	};
+
 	const Header = () => {
 		return	(<>
 			<div className="flex-fill">
@@ -89,8 +98,7 @@ export function TableScreen(props) {
 					{t("SessionListContainer|Sessions")}
 				</h3>
 			</div>
-			<DataTableFilter2 />
-			<button type="button" className="btn btn-danger">{t("General|Terminate all")}</button>
+			<button onClick={clearAllFilters} type="button" className="btn btn-danger">{t("General|Reset filters")}</button>
 		</>);
 	}
 

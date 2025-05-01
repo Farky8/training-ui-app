@@ -20,7 +20,7 @@ export function UserDetails() {
     (async () => {
         try {
             // await sleep(2000);  // uncomment to see the loading screen
-            const resp = await axios.get(`https://devtest.teskalabs.com/detail/${id}`);  // change to see error screen
+            const resp = await axios.get(`https://devtest.teskalabs.com/detail/${id}`);  // change to see the error screen
             if (isNeeded) {
                 setUserData(resp.data);
             }
@@ -65,12 +65,12 @@ export function UserDetails() {
 
   const renderUser = (
     <div className='p-3'>
-        <dl className="row">
+        <dl className="row g-2">
             <dt className="col-sm-3">ID</dt>                               <dd className="col-sm-9">{userData.id}</dd>
             <dt className="col-sm-3">{t("General|Username")}</dt>          <dd className="col-sm-9">{userData.username}</dd>
             <dt className="col-sm-3">{t("General|Email")}</dt>             <dd className="col-sm-9">{userData.email}</dd>
             <dt className="col-sm-3">{t("General|Created at")}</dt>        <dd className="col-sm-9"><DateTime value={userData.created * 1000}/></dd>
-            <dt className="col-sm-3">{t("General|Last sign in")}</dt>      <dd className="col-sm-9"><DateTime value={userData.last_sign_in * 1000}/></dd>
+            <dt className="col-sm-3">{t("General|Last signed in")}</dt>      <dd className="col-sm-9"><DateTime value={userData.last_sign_in * 1000}/></dd>
             <dt className="col-sm-3">{t("General|Address")}</dt>           <dd className="col-sm-9">{userData.address}</dd>
             <dt className="col-sm-3">{t("General|Phone")}</dt>             <dd className="col-sm-9">{userData.phone_number}</dd>
             <dt className="col-sm-3">{t("General|IP address")}</dt>        <dd className="col-sm-9">{userData.ip_address}</dd>
