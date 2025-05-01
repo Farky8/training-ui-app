@@ -4,6 +4,7 @@ import { Container }    from 'reactstrap';
 import { ResultCard, DateTime, AdvancedCard, Spinner, ErrorHandler } from 'asab_webui_components';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { sleep } from '../utils';
 
 export function UserDetails() {
   const { id }    = useParams();
@@ -17,6 +18,7 @@ export function UserDetails() {
 
     (async () => {
         try {
+            // await sleep(2000);  // uncomment to see the loading screen
             const resp = await axios.get(`https://devtest.teskalabs.com/detail/${id}`);
             if (isNeeded) {
                 setUserData(resp.data);
@@ -24,7 +26,10 @@ export function UserDetails() {
         }
         catch (e) {
             if (isNeeded) {
-                setError(e);
+                setError({
+                    error: 'General|Failed to load user details',
+                    error_dict: { msg: e.message }
+                });
             }
         }
         finally {
@@ -38,23 +43,18 @@ export function UserDetails() {
 
   if (loading) return (
     <Container className='h-100'>
-        <Spinner /> {t('General|Loading...')}
+        <Spinner />
     </Container>
   );
 
   if (error) return (
     <Container className='h-100'>
-        <ErrorHandler error={error}>
-            {t('General|Failed to load user details')}
-        </ErrorHandler>
+        <ResultCard
+            body={<ErrorHandler error={error} />}
+            isSuccessful={userData}
+        />
     </Container>
   );
-
-  if (!userData) return (
-    <Container className='h-100'>
-        {t('General|No user found')}
-    </Container>
-  )
 
   const renderUser = (
     <dl className="row">
@@ -75,6 +75,7 @@ export function UserDetails() {
       <ResultCard
         body={renderUser}
       />
+      {/* ctrl + shift + 1 to see the json */}
       <AdvancedCard data={userData} />
     </Container>
   );
